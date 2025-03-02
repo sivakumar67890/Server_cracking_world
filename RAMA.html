@@ -1,0 +1,189 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Result System</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Full-screen particle animation */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: -1;
+        }
+
+        /* Main container */
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Glowing red stroke layout */
+        .glow-layout {
+            border: 3px solid red;
+            box-shadow: 0 0 10px red;
+            padding: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        /* Glowing green text */
+        .glow-text {
+            color: #00ff00;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 8px #00ff00;
+            margin: 10px 0;
+        }
+
+        /* Result History List */
+        .result-history {
+            margin-top: 20px;
+            color: white;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .list-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particleCanvas" width="0" height="0"></canvas>
+
+<div class="main-layout">
+    <div class="glow-layout">
+        <div id="textview1" class="glow-text">RAMA PAID SERVER</div>
+        <div id="textview2" class="glow-text">20250302100010503</div>
+        <div id="textview3" class="glow-text">   0 0  :  1 6</div>
+        <div id="textview4" class="glow-text">-</div>
+        <div id="textview5" class="glow-text">-</div>
+    </div>
+
+    <div class="result-history">
+        <h3 class="glow-text">RESULT HISTORY</h3>
+        <div id="history"></div>
+    </div>
+</div>
+
+<script>
+    // Particle Animation
+    const canvas = document.getElementById("particleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 4 + 1;
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+
+        draw() {
+            ctx.fillStyle = "red";
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "red";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    // Timer and Period Logic
+    function updateTimer() {
+        const now = new Date();
+        const seconds = now.getUTCSeconds();
+        const remainingSeconds = 60 - seconds;
+        const minutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+
+        // Update period number
+        const periodNumber = now.getUTCFullYear().toString() +
+            (now.getUTCMonth() + 1).toString().padStart(2, '0') +
+            now.getUTCDate().toString().padStart(2, '0') +
+            "1000" + (10001 + minutes);
+
+        document.getElementById("textview2").textContent = periodNumber;
+
+        // Update countdown timer
+        const formattedTime = `   ${String(0).padStart(2, '0')}  :  ${String(remainingSeconds).padStart(2, '0')}`;
+        document.getElementById("textview3").textContent = formattedTime.replace(/(?<=\d)(?=\d)/g, " ");
+
+        // Random Result (BIG or SMALL)
+        if (remainingSeconds === 60) {
+            const result = Math.random() < 0.5 ? "BIG" : "SMALL";
+            document.getElementById("textview5").textContent = result;
+
+            // Add to history
+            const historyDiv = document.getElementById("history");
+            const newEntry = document.createElement("div");
+            newEntry.className = "list-item";
+            newEntry.textContent = `${periodNumber}: ${result}`;
+            historyDiv.prepend(newEntry);
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+
+    // Click Handling
+    document.body.addEventListener("click", () => {
+        const remainingSeconds = new Date().getUTCSeconds();
+        if (remainingSeconds !== 0) {
+            alert("Please wait for the next period");
+        }
+    });
+
+</script>
+
+
+</body></html>
