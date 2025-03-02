@@ -1,0 +1,224 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAMA AI MOD</title>
+    <style>
+        body {
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 80%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 50px rgba(255, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .container img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 0px;
+            border: 3px solid #0f0;
+            border-radius: 50%;
+            background-color: #000;
+            padding: 10px;
+        }
+
+        .container h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00;
+        }
+
+        .container select, .container input {
+            width: calc(90% - 20px);
+            margin: 10px 0;
+            padding: 12px;
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            outline: none;
+        }
+
+        .container select {
+            cursor: pointer;
+        }
+
+        .container input::placeholder {
+            color: #00ff00;
+        }
+
+        .container button {
+            width: calc(50% - 10px);
+            margin: 15px 5px;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #0f0, #00ff00);
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px #0f0;
+            text-transform: uppercase;
+        }
+
+        .container button:hover {
+            background: linear-gradient(90deg, #00ff00, #0f0);
+            box-shadow: 0 0 25px #0f0;
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            display: none;
+        }
+
+        .loading p {
+            color: red;
+            font-size: 30px;
+        }
+
+        .container .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+                box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            }
+
+            .container h1 {
+                font-size: 20px;
+            }
+
+            .container select, .container input, .container button {
+                font-size: 12px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://ai.tksofficial.in/tks1.png" alt="Logo">
+        <h1>RAMA AI MOD</h1>
+        
+        <select id="game-name">
+            <option value="" disabled="" selected="">Select a Game</option>
+            <option value="91 Club">91 Club</option>
+            <option value="BDG Game">BDG Game</option>
+            <option value="GOA Game">GOA Game</option>
+            <option value="BDG Win Game">BDG Win Game</option>
+            <option value="Lottery 7">Lottery 7</option>
+        </select>
+
+        <input type="text" placeholder="License Key" id="license-key">
+        <button onclick="login()">LOGIN</button>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <div class="loading" id="loading">
+        <p>𝐋𝐎𝐀𝐃𝐈𝐍𝐆...</p>
+    </div>
+
+    <script>
+        function login() {
+            const game = document.getElementById('game-name').value;
+            const licenseKey = document.getElementById('license-key').value.trim().toUpperCase();
+            const errorMessage = document.getElementById('error-message');
+
+            if (!game || !licenseKey) {
+                errorMessage.innerText = "Please select a game and enter the license key.";
+                return;
+            }
+
+            localStorage.setItem('game-name', game);
+            localStorage.setItem('game-version', "V2.0");
+            localStorage.setItem('game-play-mod', "SAFE { 97% Accuracy }");
+            localStorage.setItem('username', licenseKey);
+            const deviceID = getDeviceID();
+
+            // Show confirmation dialog for Telegram channel
+            if (confirm("Join our Telegram channel for updates?")) {
+                window.open('https://t.me/rama_predict', '_blank'); // Opens Telegram link in a new tab
+            }
+
+            // If license key is "FREE", directly redirect
+            if (licenseKey === "RAMA") {
+                window.location.href = `result.php`;
+                return;
+            }
+
+            // Otherwise, perform normal validation
+            document.getElementById('loading').style.display = 'flex';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `validate_user.php?clintname=${licenseKey}&uid=${deviceID}`, true);
+            xhr.onload = function () {
+                document.getElementById('loading').style.display = 'none';
+
+                if (xhr.status === 200) {
+                    const rx = xhr.responseText;
+                    const response = rx.replace(/[^a-zA-Z ]/g, "");
+                    errorMessage.innerText = response;
+
+                    if (response === 'done' || response === 'done1' || response === 'done2') {
+                        window.location.href = `moye/index.html?username=${licenseKey}&uid=${deviceID}`;
+                    }
+                } else {
+                    errorMessage.innerText = 'Error in request';
+                }
+            };
+            xhr.send();
+        }
+
+        function getDeviceID() {
+            let deviceID = localStorage.getItem('deviceID');
+            if (!deviceID) {
+                deviceID = 'xxxx-xxxx-4xxx-yxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0,
+                        v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+                localStorage.setItem('deviceID', deviceID);
+            }
+            return deviceID;
+        }
+    </script>
+
+
+</body></html>
