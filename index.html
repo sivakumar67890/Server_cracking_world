@@ -1,0 +1,107 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 FLASH AI S2 🤖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Image -->
+    <div class="background-image"></div>
+
+    <!-- Profile Icon -->
+    <div class="profile-icon" onclick="toggleDrawer()"></div>
+
+    <!-- Side Drawer -->
+    <div class="side-drawer" id="sideDrawer">
+        <ul>
+            <li><a href="#" onclick="showToast('Home option is not available yet.')">🏠 Home</a></li>
+            <li><a href="#" onclick="showToast('Profile option is not available yet.')">👤 Profile</a></li>
+            <li><a href="#" onclick="showCustomSettings()">⚙️ Settings</a></li>
+            <li><a href="#" onclick="logout()">🔒 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- Period -->
+        <div class="box current-period">
+            <h2 id="currentPeriod">📅 Period: 20250303100010737</h2>
+        </div>
+
+        <!-- Prediction -->
+        <div class="box prediction">
+            <h2 id="predictedNumber">🔮 Prediction: Big</h2>
+        </div>
+
+        <!-- Table -->
+        <div class="box">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Big/Small</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>20250303100010736</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010735</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010734</td>
+                        <td>Small</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010733</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010732</td>
+                        <td>Small</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010731</td>
+                        <td>Small</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010730</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010729</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010728</td>
+                        <td>Big</td>
+                    </tr>
+                    <tr>
+                        <td>20250303100010727</td>
+                        <td>Big</td>
+                    </tr></tbody>
+            </table>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button class="tutorial-btn" onclick="showTutorial()">📚 Tutorial</button>
+            <button class="stats-btn" onclick="showGameStats()">📊 Stats</button>
+        </div>
+        <div class="button-group">
+            <button class="history-btn" onclick="showHistory()">📜 History</button>
+        </div>
+    </div>
+
+    <!-- Custom Alert -->
+    <div id="customAlert"></div>
+
+    <!-- Toast Message -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+
+</body></html>
